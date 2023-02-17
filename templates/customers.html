@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Username</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for student in student_list %}
+                <tr>
+                    <th scope="row">{{ student[0] }}</th>
+                    <td>{{ student[1] }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
