@@ -1,5 +1,4 @@
 import os
-
 import psycopg2
 from flask import Flask, render_template, url_for
 from db import DBConnect
@@ -29,9 +28,13 @@ def index():
 def customer():
     cursor = conn.cursor()
     try:
-        cursor.execute('SELECT * FROM student')
-        student_list = cursor.fetchall()
-        return render_template('customers.html', student_list=student_list, url_for=url_for)
+        cursor.execute("""SELECT c.first_name, c.middle_name, c.last_name, c.email, c.phone_number, 
+        a.account_number, a.balance
+        FROM customer c, account a
+        WHERE c.customer_id = a.customer_id""")
+
+        customer_list = cursor.fetchall()
+        return render_template('customers.html', customer_list=customer_list, url_for=url_for)
     except(Exception, psycopg2.Error) as e:
         return f'Could not fetch students.\nError: {e}'
     finally:
@@ -42,11 +45,15 @@ def customer():
 def customer_account(user_id):
     cursor = conn.cursor()
     try:
-        cursor.execute('SELECT * FROM student WHERE customer_id=%s', user_id)
-        student_list = cursor.fetchall()
-        return render_template('account.html', user_id=user_id, student_list=student_list, url_for=url_for)
+        cursor.execute("""SELECT c.first_name, c.middle_name, c.last_name, c.email, c.phone_number, 
+        a.account_number, a.balance
+        FROM customer c, account a
+        WHERE c.customer_id = a.customer_id and c.customer_id=%s""", user_id)
+        
+        my_account = cursor.fetchall()
+        return render_template('account.html', my_account=my_account, url_for=url_for)
     except(Exception, psycopg2.Error) as e:
-        return f'Could not fetch students.\nError: {e}'
+        return f'Could not fetch account.\nError: {e}'
     finally:
         cursor.close()
 
