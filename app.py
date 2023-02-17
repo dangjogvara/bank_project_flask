@@ -40,9 +40,15 @@ def customer():
 
 @app.route('/customer/<user_id>')
 def customer_account(user_id):
-    cursor.execute('SELECT * FROM student WHERE customer_id=%s', user_id)
-    student_list = cursor.fetchall()
-    return render_template('account.html', user_id=user_id, student_list=student_list, url_for=url_for)
+    cursor = conn.cursor()
+    try:
+        cursor.execute('SELECT * FROM student WHERE customer_id=%s', user_id)
+        student_list = cursor.fetchall()
+        return render_template('account.html', user_id=user_id, student_list=student_list, url_for=url_for)
+    except(Exception, psycopg2.Error) as e:
+        return f'Could not fetch students.\nError: {e}'
+    finally:
+        cursor.close()
 
 
 if __name__ == '__main__':
