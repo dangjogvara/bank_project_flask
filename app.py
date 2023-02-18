@@ -5,8 +5,8 @@ from db import DBConnect
 from dotenv import load_dotenv
 
 # load .env file
-load_dotenv()
 app = Flask(__name__)
+load_dotenv()
 
 # load database config
 user = os.environ.get('USER')
@@ -49,7 +49,7 @@ def customer_account(user_id):
         a.account_number, a.balance
         FROM customer c, account a
         WHERE c.customer_id = a.customer_id and c.customer_id=%s""", user_id)
-        
+
         my_account = cursor.fetchall()
         return render_template('account.html', my_account=my_account, url_for=url_for)
     except(Exception, psycopg2.Error) as e:

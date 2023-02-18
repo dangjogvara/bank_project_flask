@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="container">
-        <table class="table table-striped" id="table-customers" onclick="selectAccount()">
+        <table class="table table-striped" id="table-customers">
             <thead>
             <tr>
                 <th scope="col">Account Number</th>
@@ -14,8 +14,8 @@
             </thead>
             <tbody>
             {% for customer in customer_list %}
-                <tr class="cursor-pointer">
-                    <td>{{ customer[5] }}</td>
+                <tr class="cursor-pointer" id="account_id" onclick="selectAccount(this)">
+                    <td id="account_number">{{ customer[5] }}</td>
                     <td>{{ customer[0] }}</td>
                     <td>{{ customer[1] }}</td>
                     <td>{{ customer[2] }}</td>
