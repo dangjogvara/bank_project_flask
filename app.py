@@ -28,7 +28,7 @@ def index():
 def customer():
     cursor = conn.cursor()
     try:
-        cursor.execute("""SELECT c.first_name, c.middle_name, c.last_name, c.email, c.phone_number, 
+        cursor.execute("""SELECT c.customer_id, c.first_name, c.middle_name, c.last_name, c.email, c.phone_number, 
         a.account_number, a.balance
         FROM customer c, account a
         WHERE c.customer_id = a.customer_id""")
@@ -45,7 +45,7 @@ def customer():
 def customer_account(user_id):
     cursor = conn.cursor()
     try:
-        cursor.execute("""SELECT c.first_name, c.middle_name, c.last_name, c.email, c.phone_number, 
+        cursor.execute("""SELECT c.customer_id, c.first_name, c.middle_name, c.last_name, c.email, c.phone_number, 
         a.account_number, a.balance
         FROM customer c, account a
         WHERE c.customer_id = a.customer_id and c.customer_id=%s""", user_id)

@@ -15,11 +15,11 @@
             <tbody>
             {% for customer in my_account %}
                 <tr>
-                    <td>{{ customer[5] }}</td>
-                    <td>{{ customer[0] }}</td>
+                    <td>{{ customer[6] }}</td>
                     <td>{{ customer[1] }}</td>
                     <td>{{ customer[2] }}</td>
-                    <td>{{ "DKK{:,.2f}".format(customer[6]) }}</td>
+                    <td>{{ customer[3] }}</td>
+                    <td>{{ "DKK{:,.2f}".format(customer[7]) }}</td>
                 </tr>
             {% endfor %}
             </tbody>
