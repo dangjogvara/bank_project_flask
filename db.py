@@ -20,5 +20,5 @@ class DBConnect:
 
             return connection
 
-        except(Exception, psycopg2.Error) as e:
+        except (Exception, psycopg2.Error) as e:
             print('Error connecting to the database ', e)

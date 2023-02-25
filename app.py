@@ -28,14 +28,14 @@ def index():
 def client():
     cursor = conn.cursor()
     try:
-        cursor.execute("""SELECT c.client_id, c.first_name, c.middle_name, c.last_name, c.email, c.phone_number, 
+        cursor.execute("""SELECT c.client_id, c.first_name, c.middle_name, c.last_name, c.email, c.phone_number,
         a.account_number, a.balance
         FROM client c, account a
         WHERE c.client_id = a.client_id""")
 
         client_list = cursor.fetchall()
         return render_template('clients.html', client_list=client_list, url_for=url_for)
-    except(Exception, psycopg2.Error) as e:
+    except (Exception, psycopg2.Error) as e:
         return f'Could not fetch clients.\nError: {e}'
     finally:
         cursor.close()
@@ -52,7 +52,7 @@ def client_account(user_id):
 
         my_account = cursor.fetchall()
         return render_template('account.html', my_account=my_account, url_for=url_for)
-    except(Exception, psycopg2.Error) as e:
+    except (Exception, psycopg2.Error) as e:
         return f'Could not fetch account.\nError: {e}'
     finally:
         cursor.close()
