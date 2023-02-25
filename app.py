@@ -24,31 +24,31 @@ def index():
     return render_template('index.html', title='Dangjogvara Bank', url_for=url_for)
 
 
-@app.route('/customer')
-def customer():
+@app.route('/client')
+def client():
     cursor = conn.cursor()
     try:
-        cursor.execute("""SELECT c.customer_id, c.first_name, c.middle_name, c.last_name, c.email, c.phone_number, 
+        cursor.execute("""SELECT c.client_id, c.first_name, c.middle_name, c.last_name, c.email, c.phone_number, 
         a.account_number, a.balance
-        FROM customer c, account a
-        WHERE c.customer_id = a.customer_id""")
+        FROM client c, account a
+        WHERE c.client_id = a.client_id""")
 
-        customer_list = cursor.fetchall()
-        return render_template('customers.html', customer_list=customer_list, url_for=url_for)
+        client_list = cursor.fetchall()
+        return render_template('clients.html', client_list=client_list, url_for=url_for)
     except(Exception, psycopg2.Error) as e:
-        return f'Could not fetch students.\nError: {e}'
+        return f'Could not fetch clients.\nError: {e}'
     finally:
         cursor.close()
 
 
-@app.route('/customer/<user_id>')
-def customer_account(user_id):
+@app.route('/client/<user_id>')
+def client_account(user_id):
     cursor = conn.cursor()
     try:
-        cursor.execute("""SELECT c.customer_id, c.first_name, c.middle_name, c.last_name, c.email, c.phone_number, 
+        cursor.execute("""SELECT c.client_id, c.first_name, c.middle_name, c.last_name, c.email, c.phone_number, 
         a.account_number, a.balance
-        FROM customer c, account a
-        WHERE c.customer_id = a.customer_id and c.customer_id=%s""", user_id)
+        FROM client c, account a
+        WHERE c.client_id = a.client_id and c.client_id=%s""", user_id)
 
         my_account = cursor.fetchall()
         return render_template('account.html', my_account=my_account, url_for=url_for)

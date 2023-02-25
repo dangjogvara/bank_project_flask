@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="container">
-        <h1>Customers</h1>
+        <h1>Clients</h1>
         <table class="table">
             <thead>
             <tr>
@@ -13,13 +13,13 @@
             </tr>
             </thead>
             <tbody>
-            {% for customer in customer_list %}
-                <tr class="cursor-pointer">
-                    <td>{{ customer[1] }}</td>
-                    <td>{{ customer[2] }}</td>
-                    <td>{{ customer[3] }}</td>
+            {% for client in client_list %}
+                <tr>
+                    <td>{{ client[1] }}</td>
+                    <td>{{ client[2] }}</td>
+                    <td>{{ client[3] }}</td>
                     <td>
-                        <a href="{{ url_for('customer_account', user_id=customer[0]) }}">
+                        <a href="{{ url_for('client_account', user_id=client[0]) }}">
                             <button type="button" class="btn btn-primary btn-sm">View</button>
                         </a>
                     </td>

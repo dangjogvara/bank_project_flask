@@ -15,12 +15,12 @@
         <div class="container">
             <a class="navbar-brand" href="{{ url_for('index') }}">Dangjogvara Bank</a>
             <div class="collapse navbar-collapse">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav" id="navbar-active">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('customer') }}">Customers</a>
+                        <a class="nav-link" href="{{ url_for('client') }}">Clients</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('customer_account', user_id=1) }}">My Account</a>
+                        <a class="nav-link" href="{{ url_for('client_account', user_id=1) }}">My Account</a>
                     </li>
                 </ul>
             </div>
@@ -31,5 +31,6 @@
     {% block content %}{% endblock %}
 </main>
 <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/activeLink.js') }}"></script>
 </body>
 </html>
