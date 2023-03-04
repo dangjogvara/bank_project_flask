@@ -49,9 +49,11 @@ def client_account(user_id):
 
     try:
         cursor.execute("""SELECT a.acc_no, p.first_name, p.middle_name, p.last_name, a.balance
-                          FROM account a, person p, client c, acc_owner o
-                          WHERE p.person_id = c.fk_person_id and c.client_id = o.client_id and o.acc_id = a.acc_id 
-                          and p.person_id = %s""",
+                          FROM account a
+                          JOIN acc_owner o ON o.acc_id = a.acc_id
+                          JOIN client c ON c.client_id = o.client_id
+                          JOIN person p ON p.person_id = c.fk_person_id
+                          WHERE p.person_id = %s""",
                        user_id)
 
         my_account = cursor.fetchall()
