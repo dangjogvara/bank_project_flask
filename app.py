@@ -17,6 +17,7 @@ port = os.environ.get('PORT')
 
 # db cursor
 conn = DBConnect.get_connection(user, password, host, database, port)
+conn.autocommit = False
 
 
 @app.route('/')
@@ -27,14 +28,15 @@ def index():
 @app.route('/client')
 def client():
     cursor = conn.cursor()
+
     try:
-        cursor.execute("""SELECT c.client_id, c.first_name, c.middle_name, c.last_name, c.email, c.phone_number,
-        a.account_number, a.balance
-        FROM client c, account a
-        WHERE c.client_id = a.client_id""")
+        cursor.execute("""SELECT p.person_id, p.first_name, p.middle_name, p.last_name
+                        FROM person p, client c WHERE p.person_id = c.client_id""")
 
         client_list = cursor.fetchall()
-        return render_template('clients.html', client_list=client_list, url_for=url_for)
+        name_list = [name[1] for name in client_list]
+
+        return render_template('clients.html', client_list=client_list, name_list=name_list, url_for=url_for)
     except (Exception, psycopg2.Error) as e:
         return f'Could not fetch clients.\nError: {e}'
     finally:
@@ -44,11 +46,13 @@ def client():
 @app.route('/client/<user_id>')
 def client_account(user_id):
     cursor = conn.cursor()
+
     try:
-        cursor.execute("""SELECT c.client_id, c.first_name, c.middle_name, c.last_name, c.email, c.phone_number, 
-        a.account_number, a.balance
-        FROM client c, account a
-        WHERE c.client_id = a.client_id and c.client_id=%s""", user_id)
+        cursor.execute("""SELECT a.acc_no, p.first_name, p.middle_name, p.last_name, a.balance
+                          FROM account a, person p, client c, acc_owner o
+                          WHERE p.person_id = c.fk_person_id and c.client_id = o.client_id and o.acc_id = a.acc_id 
+                          and p.person_id = %s""",
+                       user_id)
 
         my_account = cursor.fetchall()
         return render_template('account.html', my_account=my_account, url_for=url_for)
